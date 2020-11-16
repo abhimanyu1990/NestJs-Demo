@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { RuntimeExceptionFilter } from 'src/common/filters/runtimeException.filter';
 import {CustomLogger} from 'src/common/logger/custom-logger.service';
 import { SwaggerModule, DocumentBuilder} from "@nestjs/swagger";
+import { AuthGuard } from './security/middleware/authGuard.middleware';
 
 declare const module: any;
 

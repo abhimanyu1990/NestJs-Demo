@@ -3,7 +3,7 @@ import { LoginRequestDto, LoginResponseDto } from "src/security/security-dto";
 import { IAuthResponse } from "src/security/auth.interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { UserEntity } from "src/user/user.entity";
+import { UserEntity } from "src/user/entity/user.entity";
 import { CustomLogger } from "src/common/logger/custom-logger.service";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
@@ -45,7 +45,7 @@ export class SecurityService {
         let isPasswordMatched: boolean = await argon2.verify(user.password, loginDto.password);
         if (isPasswordMatched) {
             let payload = { "email": user.email, "user": { "id": user.id, "first_name": user.first_name, "is_active": user.is_active, "is_account_locked": user.is_account_locked } };
-            const accessToken = this.jwtService.sign(payload, { expiresIn: '2d', subject: user.email, algorithm: "HS512", secret: "testing" });
+            const accessToken = this.jwtService.sign(payload, { expiresIn: '2d', subject: user.email, algorithm: "HS512", "secret" : 'secret12356789' });
             let authResponse: LoginResponseDto = new LoginResponseDto();
             authResponse.email = user.email;
             authResponse.token = accessToken;

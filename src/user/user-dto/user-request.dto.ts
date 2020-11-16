@@ -4,7 +4,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { plainToClass } from "class-transformer";
 import {IsEmail, IsNotEmpty} from "class-validator";
 import { MatchFieldValue, MatchRegex } from "src/common/validators";
-import { UserEntity } from "src/user/user.entity";
+import { UserEntity } from "src/user/entity/user.entity";
 
 export class UserRequestDto{
     

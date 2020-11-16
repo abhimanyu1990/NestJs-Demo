@@ -1,13 +1,14 @@
 import { Module, NestModule } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { UserEntity } from "src/user/user.entity";
+import { UserEntity } from "src/user/entity/user.entity";
 import { LoggerModule } from "src/common/logger/logger.module";
 import { FilterModule } from "src/common/filters/filter.module";
 import { SecurityService } from "src/security/security.service";
 import { SecurityController } from "src/security/security.controller";
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ConfigModule } from "src/configuration/config.module";
-import { RedisModule, RedisService } from "nestjs-redis";
+import { RedisModule } from "nestjs-redis";
+import { AuthGuard } from "./middleware/authGuard.middleware";
 
 @Module({
     imports: [
@@ -15,16 +16,14 @@ import { RedisModule, RedisService } from "nestjs-redis";
         LoggerModule,
         FilterModule,
         ConfigModule,
-        JwtModule.register({
-            secretOrPrivateKey: 'secret12356789'
-        }),
+        JwtModule.register({}),
         RedisModule
     ],
-    providers:[SecurityService ],
+    providers:[SecurityService , AuthGuard],
     controllers:[
         SecurityController
     ],
-    exports: [SecurityService]
+    exports: [SecurityService, AuthGuard]
 })
 export class SecurityModule implements NestModule {
     public configure(){

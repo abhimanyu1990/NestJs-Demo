@@ -1,2 +1,3 @@
-# NestJs-Demo
-This is demo work to show case implementation of various functionality/feature in NestJs
+# NestJs-Kickstart
+
+This is boilerplate project for NestJs/Postgres project

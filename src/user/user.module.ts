@@ -5,7 +5,6 @@ import { UserEntity } from "./entity/user.entity";
 import { UserService } from "./user.service";
 import { LoggerModule } from "src/common/logger/logger.module";
 import { FilterModule } from "src/common/filters/filter.module";
-import { AppModule } from "src/app.module";
 import { PermissionController } from "./permission.controller";
 import { PermissionService } from "./permission.service";
 import { PermissionEntity } from "./entity/permission.entity";

@@ -31,7 +31,7 @@ export class UserEntity {
     @Column()
     isActive: boolean = true;
 
-    @ManyToMany(() => RoleEntity)
+    @ManyToMany(() => RoleEntity, { eager: true})
     @JoinTable()
     roles: RoleEntity[];
 

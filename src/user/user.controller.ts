@@ -1,8 +1,8 @@
-import { Controller, Post } from "@nestjs/common";
+import { Controller, Param, Post } from "@nestjs/common";
 import { ApiTags, ApiResponse } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import {UsePipes, ValidationPipe, Body} from "@nestjs/common";
-import { UserReqDto, UserResDto } from "./user-dto";
+import { UserReqDto, UserResDto , AssignRolesToUserDto} from "./user-dto";
 import { ErrorResponse } from "src/common/responses/errorResponse";
 
 @ApiTags('User')
@@ -25,6 +25,11 @@ export class UserController {
     @Post('users')
     async register(@Body() userData: UserReqDto) {
         return await this.userService.register(userData);
+    }
+
+    @Post('users/:userId/roles')
+    async assignRolesToUser(@Param('userId') userId:number,@Body() roleIds: AssignRolesToUserDto){
+        return await this.userService.assignRolesToUser(userId,roleIds);
     }
 
 

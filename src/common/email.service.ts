@@ -1,10 +1,12 @@
 import { MailerService } from "@nestjs-modules/mailer";
 import { Injectable } from "@nestjs/common";
+import { CustomLogger } from "./logger/custom-logger.service";
 
 @Injectable()
 export class EmailService {
 
-    constructor(private readonly mailService: MailerService) {
+    constructor(private readonly mailService: MailerService,
+                private readonly logger:CustomLogger) {
     }
 
     async sendTextMail(toEmail: string, subject: string, textBody: string, fromEmail: string) {
@@ -15,9 +17,8 @@ export class EmailService {
             subject: subject,
             text: textBody,
         }).then(() => {
-                console.log("email success")
+               this.logger.log("email success")
         })
-
     }
 
 

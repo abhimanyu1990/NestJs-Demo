@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { CustomLogger } from 'src/common/logger/custom-logger.service';
-import { MailerModule, MailerService } from "@nestjs-modules/mailer";
+import { MailerModule } from "@nestjs-modules/mailer";
 import config from "src/configuration/properties";
 import { EmailService } from './email.service';
-import nodemailer  from "nodemailer";
+import { LoggerModule } from './logger/logger.module';
+
 
 
 @Module({
   imports:[
-    MailerModule.forRoot(config[process.env.NODE_ENV]["emailConfig"])
+    MailerModule.forRoot(config[process.env.NODE_ENV]["emailConfig"]),
+    LoggerModule
   ],
   providers: [EmailService],
   exports: [EmailService]

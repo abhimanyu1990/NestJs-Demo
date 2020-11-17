@@ -3,7 +3,7 @@ import { BaseResponse } from "src/common/responses/baseResponse.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
 
-export class UserResponseDto extends BaseResponse{
+export class UserResDto extends BaseResponse{
     
     @ApiProperty({example:"test@mail.com"})
     email:string;
@@ -13,7 +13,7 @@ export class UserResponseDto extends BaseResponse{
     lastName:string;
 
     static transform(object: any){
-        let transformedObj : UserResponseDto = plainToClass(UserResponseDto, object, {excludePrefixes:["password","confirmPassword"]});
+        let transformedObj : UserResDto = plainToClass(UserResDto, object, {excludePrefixes:["password","confirmPassword"]});
         return transformedObj;
     }
 

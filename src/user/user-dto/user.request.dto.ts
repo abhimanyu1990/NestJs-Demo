@@ -6,7 +6,7 @@ import {IsEmail, IsNotEmpty} from "class-validator";
 import { MatchFieldValue, MatchRegex } from "src/common/validators";
 import { UserEntity } from "src/user/entity/user.entity";
 
-export class UserRequestDto{
+export class UserReqDto{
     
     @ApiProperty({ example: "test@mail.com", description: 'The email of user', required:true,uniqueItems:true })
     @IsNotEmpty()
@@ -28,7 +28,7 @@ export class UserRequestDto{
     @ApiProperty({ example: "Test@123", description: 'Password and confirmPassword must match',required:true })
     readonly confirmPassword:string;
 
-    static transformToEntity(userRequestDto: UserRequestDto){
-        return plainToClass(UserEntity, userRequestDto);
+    static transformToEntity(userReqDto: UserReqDto){
+        return plainToClass(UserEntity, userReqDto);
     }
 }

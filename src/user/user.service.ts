@@ -2,7 +2,7 @@ import { Injectable, Type } from "@nestjs/common";
 import { UserEntity }  from "./entity/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { UserRequestDto,UserResponseDto} from "./user-dto";
+import { UserReqDto,UserResDto} from "./user-dto";
 import { IUser } from "./user.interface";
 import { CustomLogger} from "src/common/logger/custom-logger.service";
 
@@ -16,10 +16,10 @@ export class UserService{
         this.logger.setContext('UserService');
       }
     
-      async register(dto: UserRequestDto): Promise<IUser> {
-        let entity: UserEntity = UserRequestDto.transformToEntity(dto);
+      async register(dto: UserReqDto): Promise<IUser> {
+        let entity: UserEntity = UserReqDto.transformToEntity(dto);
         entity = await this.userRepository.save(entity);
-        let data : UserResponseDto = await UserResponseDto.transform(dto);
+        let data : UserResDto = await UserResDto.transform(dto);
         return data;
       }
 

@@ -2,7 +2,7 @@ import { IAuthResponse } from "../auth.interface";
 import { BaseResponse } from "src/common/responses/baseResponse.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class LoginResponseDto extends BaseResponse implements IAuthResponse {
+export class LoginResDto extends BaseResponse implements IAuthResponse {
 
     @ApiProperty({example:"test@mail.com",description:"Email of the user Account"})
     email: string;

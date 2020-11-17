@@ -1,7 +1,7 @@
 import { ApiTags } from "@nestjs/swagger";
 import { Controller } from "@nestjs/common";
 import { Post , Body } from "@nestjs/common";
-import { LoginRequestDto, LoginResponseDto } from "src/security/security-dto";
+import { LoginReqDto, LoginResDto } from "src/security/security-dto";
 import { SecurityService } from "src/security/security.service";
 import { ApiResponse}  from "@nestjs/swagger";
 import { ErrorResponse } from "src/common/responses/errorResponse";
@@ -13,7 +13,7 @@ export class SecurityController{
     @ApiResponse({
         status: 200,
         description: 'User created',
-        type: LoginResponseDto,
+        type: LoginResDto,
       })
     @ApiResponse({
         status: 404,
@@ -21,7 +21,7 @@ export class SecurityController{
         type: ErrorResponse
     })
     @Post('login')
-    async login(@Body() loginDto: LoginRequestDto) {
+    async login(@Body() loginDto: LoginReqDto) {
         return await this.securityService.login(loginDto);
     }
     

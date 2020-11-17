@@ -6,22 +6,28 @@ import { UserService } from "./user.service";
 import { LoggerModule } from "src/common/logger/logger.module";
 import { FilterModule } from "src/common/filters/filter.module";
 import { AppModule } from "src/app.module";
+import { PermissionController } from "./permission.controller";
+import { PermissionService } from "./permission.service";
+import { PermissionEntity } from "./entity/permission.entity";
+import { RoleEntity } from "./entity/role.entity";
+import { RoleController } from "./role.controller";
+import { RoleService } from "./role.service";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserEntity]),
+        TypeOrmModule.forFeature([UserEntity, PermissionEntity, RoleEntity]),
         LoggerModule,
         FilterModule
     ],
-    providers:[UserService ],
+    providers:[UserService, PermissionService, RoleService ],
     controllers:[
-        UserController
+        UserController, PermissionController, RoleController
     ],
     exports: [UserService]
 })
+
 export class UserModule implements NestModule {
     public configure(){
-
     }
 
 }

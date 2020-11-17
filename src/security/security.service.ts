@@ -1,5 +1,5 @@
 import { HttpException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { LoginRequestDto, LoginResponseDto } from "src/security/security-dto";
+import { LoginReqDto, LoginResDto } from "src/security/security-dto";
 import { IAuthResponse } from "src/security/auth.interface";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -27,7 +27,7 @@ export class SecurityService {
         this.redisClient =  this.redisService.getClient(ConfigService.PROPERTIES.redis.name);
     }
 
-    async login(loginDto: LoginRequestDto): Promise<IAuthResponse> {
+    async login(loginDto: LoginReqDto): Promise<IAuthResponse> {
 
     
 
@@ -46,7 +46,7 @@ export class SecurityService {
         if (isPasswordMatched) {
             let payload = { "email": user.email, "user": { "id": user.id, "firstName": user.firstName, "isActive": user.isActive, "isAccountLocked": user.isAccountLocked } };
             const accessToken = this.jwtService.sign(payload, { expiresIn: '2d', subject: user.email, algorithm: "HS512", "secret" : 'secret12356789' });
-            let authResponse: LoginResponseDto = new LoginResponseDto();
+            let authResponse: LoginResDto = new LoginResDto();
             authResponse.email = user.email;
             authResponse.token = accessToken;
             this.redisClient.set(user.email,authResponse.token,'EX',3600);

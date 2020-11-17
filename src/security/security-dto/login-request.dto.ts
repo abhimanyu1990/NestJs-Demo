@@ -3,7 +3,7 @@ import { IsEmail, IsNotEmpty } from "class-validator";
 import { MatchRegex } from "src/common/validators";
 
 
-export class LoginRequestDto {
+export class LoginReqDto {
 
     @IsEmail()
     @IsNotEmpty()

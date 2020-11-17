@@ -26,7 +26,7 @@ export class UserService{
         return data;
       }
 
-      async assignRolesToUser(userId:number,roleIds:AssignRolesToUserDto):Promise<any>{
+      async assignRolesToUser(userId:number,roleIds:AssignRolesToUserDto):Promise<IUser>{
             let roles:RoleEntity[] = await this.roleRepo.findByIds(roleIds.roles);
             let user: UserEntity = await this.userRepository.findOne(userId);
             if(user == null){
@@ -34,8 +34,8 @@ export class UserService{
             }
             roles.forEach(role => {
               user.roles.push(role);
-            })
-
-            return this.userRepository.save(user);
+            });
+            user = await this.userRepository.save(user);
+            return UserResDto.transform(user);
       }
 }

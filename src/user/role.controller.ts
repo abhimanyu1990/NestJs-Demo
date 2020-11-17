@@ -24,10 +24,8 @@ export class RoleController{
         return this.roleService.create(roleReqDto);
     }
 
-    @Post("roles/:roleId")
+    @Post("roles/:roleId/permissions")
     async assignPermissionToRole(@Param('roleId') roleId: number, @Body() permissionIds: AssignPermissionsToRoleDto){
-        this.logger.log(roleId, "================roleid===========");
-        this.logger.log(permissionIds,"permission Id list =================");
         return this.roleService.assignPermissionsToRole(roleId,permissionIds);
     }
 

@@ -1,4 +1,4 @@
-import { Controller, Param, Post } from "@nestjs/common";
+import { Controller, Get, Param, Post } from "@nestjs/common";
 import { ApiTags, ApiResponse } from "@nestjs/swagger";
 import { UserService } from "./user.service";
 import {UsePipes, ValidationPipe, Body} from "@nestjs/common";
@@ -35,5 +35,8 @@ export class UserController {
     }
 
 
-    
+    @Get("verifyaccount/:token")
+    async verifyAccount(@Param('token') token:string){
+        return await this.userService.verifyAccount(token);
+    }
 }

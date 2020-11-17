@@ -15,7 +15,8 @@ import { BootstrapService } from './bootstrap.service';
 import { UserEntity } from "src/user/entity/user.entity";
 import { PermissionEntity } from "src/user/entity/permission.entity";
 import { RoleEntity } from "src/user/entity/role.entity";
-
+import { MailerModule } from "@nestjs-modules/mailer";
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -27,7 +28,9 @@ import { RoleEntity } from "src/user/entity/role.entity";
     FilterModule,
     ConfigModule,
     RedisModule.register(config[process.env.NODE_ENV]["redis"]),
-    JwtModule.register({})
+    JwtModule.register({}),
+    CommonModule,
+    MailerModule.forRoot(config[process.env.NODE_ENV]["emailConfig"])
   ],
   controllers: [AppController],
   providers: [

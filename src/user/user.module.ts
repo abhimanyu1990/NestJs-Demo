@@ -11,12 +11,17 @@ import { PermissionEntity } from "./entity/permission.entity";
 import { RoleEntity } from "./entity/role.entity";
 import { RoleController } from "./role.controller";
 import { RoleService } from "./role.service";
+import { CommonModule } from "src/common/common.module";
+import { ConfigModule } from "src/configuration/config.module";
+import { VerificationTokenEntity } from "./entity/verificationToken.entity";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserEntity, PermissionEntity, RoleEntity]),
+        TypeOrmModule.forFeature([UserEntity, PermissionEntity, RoleEntity, VerificationTokenEntity]),
         LoggerModule,
-        FilterModule
+        FilterModule,
+        CommonModule,
+        ConfigModule
     ],
     providers:[UserService, PermissionService, RoleService ],
     controllers:[

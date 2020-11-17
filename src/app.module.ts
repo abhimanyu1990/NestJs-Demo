@@ -11,10 +11,16 @@ import { ConfigModule } from './configuration/config.module';
 import config from "src/configuration/properties";
 import {RedisModule} from "nestjs-redis";
 import { JwtModule, JwtService } from "@nestjs/jwt";
+import { BootstrapService } from './bootstrap.service';
+import { UserEntity } from "src/user/entity/user.entity";
+import { PermissionEntity } from "src/user/entity/permission.entity";
+import { RoleEntity } from "src/user/entity/role.entity";
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(config[process.env.NODE_ENV]["ormConfig"]),
+    TypeOrmModule.forFeature([UserEntity, PermissionEntity, RoleEntity]),
     UserModule,
     SecurityModule,
     LoggerModule,
@@ -25,7 +31,7 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
   ],
   controllers: [AppController],
   providers: [
-    AppService
+    AppService, BootstrapService
   ]
 })
 export class AppModule {

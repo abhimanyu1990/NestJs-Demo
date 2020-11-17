@@ -21,15 +21,15 @@ export class SecurityService {
         private readonly logger: CustomLogger,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
-        private readonly redisService:RedisService
+        private readonly redisService: RedisService
     ) {
         this.logger.setContext('UserService');
-        this.redisClient =  this.redisService.getClient(ConfigService.PROPERTIES.redis.name);
+        this.redisClient = this.redisService.getClient(ConfigService.PROPERTIES.redis.name);
     }
 
     async login(loginDto: LoginReqDto): Promise<IAuthResponse> {
 
-    
+
 
         let user: UserEntity = await this.userRepository.findOne({ where: { email: loginDto.email } });
 
@@ -38,18 +38,26 @@ export class SecurityService {
         }
 
         if (!user.isActive || user.isAccountLocked) {
-           // throw new UnauthorizedException(" User account is locked or deactivated. Please contact support");
+            throw new UnauthorizedException(" User account is locked or deactivated. Please contact support");
         }
 
 
         let isPasswordMatched: boolean = await argon2.verify(user.password, loginDto.password);
         if (isPasswordMatched) {
-            let payload = { "email": user.email, "user": { "id": user.id, "firstName": user.firstName, "isActive": user.isActive, "isAccountLocked": user.isAccountLocked } };
-            const accessToken = this.jwtService.sign(payload, { expiresIn: '2d', subject: user.email, algorithm: "HS512", "secret" : 'secret12356789' });
+            let permissionList = []
+            user.roles.forEach(role => {
+                role.permissions.forEach(permission => {
+                    permissionList.push(permission.value);
+                })
+            })
+            let payload = { "email": user.email, "user": { "id": user.id, "firstName": user.firstName, "isActive": user.isActive, "isAccountLocked": user.isAccountLocked, "permissions": permissionList } };
+            const accessToken = this.jwtService.sign(payload, { expiresIn: '2d', subject: user.email, algorithm: "HS512", "secret": 'secret12356789' });
             let authResponse: LoginResDto = new LoginResDto();
             authResponse.email = user.email;
             authResponse.token = accessToken;
-            this.redisClient.set(user.email,authResponse.token,'EX',3600);
+
+
+            this.redisClient.set(user.email, authResponse.token, 'EX', 3600);
             return authResponse;
         } else {
             throw new UnauthorizedException("Credentials are wrong. Kindly try again with right email and password.");

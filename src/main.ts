@@ -3,7 +3,9 @@ import { AppModule } from './app.module';
 import { RuntimeExceptionFilter } from 'src/common/filters/runtimeException.filter';
 import {CustomLogger} from 'src/common/logger/custom-logger.service';
 import { SwaggerModule, DocumentBuilder} from "@nestjs/swagger";
+
 import { AuthGuard } from './security/middleware/authGuard.middleware';
+import { BootstrapService } from './bootstrap.service';
 
 declare const module: any;
 
@@ -21,6 +23,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document)
+  
+  let bootstrapService = app.get(BootstrapService);
+  bootstrapService.createAdmin();
   
   await app.listen(3000);
 

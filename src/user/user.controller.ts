@@ -4,6 +4,7 @@ import { UserService } from "./user.service";
 import {UsePipes, ValidationPipe, Body} from "@nestjs/common";
 import { UserReqDto, UserResDto , AssignRolesToUserDto} from "./user-dto";
 import { ErrorResponse } from "src/common/responses/errorResponse";
+import { Authority } from "../security/authority.decorator";
 
 @ApiTags('User')
 @Controller()
@@ -28,6 +29,7 @@ export class UserController {
     }
 
     @Post('users/:userId/roles')
+    @Authority('ASSIGN_ROLE')
     async assignRolesToUser(@Param('userId') userId:number,@Body() roleIds: AssignRolesToUserDto){
         return await this.userService.assignRolesToUser(userId,roleIds);
     }

@@ -15,10 +15,10 @@ export class UserRequestDto{
 
     @IsNotEmpty()
     @ApiProperty({ example: "John", description: 'First name of the suer',required:true })
-    readonly first_name:string;
+    readonly firstName:string;
 
     @ApiProperty({ example: "Smith", description: 'Last name of the suer',required:false })
-    readonly last_name:string;
+    readonly lastName:string;
 
     @ApiProperty({ example: "Test@123", description: 'Minimum 8 letters, Alphanumeric, must contain atleast one capital letter, small letter, number and special character',required:true })
     @MatchRegex("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")

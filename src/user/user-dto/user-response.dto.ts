@@ -8,9 +8,9 @@ export class UserResponseDto extends BaseResponse{
     @ApiProperty({example:"test@mail.com"})
     email:string;
     @ApiProperty({example:"John"})
-    first_name:string;
+    firstName:string;
     @ApiProperty({example:"Smith"})
-    last_name:string;
+    lastName:string;
 
     static transform(object: any){
         let transformedObj : UserResponseDto = plainToClass(UserResponseDto, object, {excludePrefixes:["password","confirmPassword"]});

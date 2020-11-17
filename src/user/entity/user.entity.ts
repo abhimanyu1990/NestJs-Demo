@@ -1,7 +1,8 @@
 
 import { IsEmail, IsNotEmpty } from "class-validator";
-import {Column, Entity,PrimaryGeneratedColumn, BeforeInsert, Unique} from "typeorm";
+import {Column, Entity,PrimaryGeneratedColumn, BeforeInsert, Unique, ManyToMany, JoinTable} from "typeorm";
 import * as argon2 from "argon2";
+import { RoleEntity } from "./role.entity";
 
 @Entity("users")
 export class UserEntity {
@@ -15,20 +16,24 @@ export class UserEntity {
 
     @IsNotEmpty()
     @Column()
-    first_name:string;
+    firstName:string;
 
     @Column()
-    last_name:string;
+    lastName:string;
 
     @IsNotEmpty()
     @Column()
     password:string;
 
     @Column()
-    is_account_locked: boolean = true;
+    isAccountLocked: boolean = true;
 
     @Column()
-    is_active: boolean = true;
+    isActive: boolean = true;
+
+    @ManyToMany(() => RoleEntity)
+    @JoinTable()
+    roles: RoleEntity[];
 
     @BeforeInsert()
      async hashPassword() {

@@ -3,17 +3,17 @@ const config = {
         "redis": {
             "name":'test',
             "readOnly":true,
-            "host": "192.168.0.117" ,
+            "host": "localhost" ,
             "port": 6379,
             "client_name":"demo"
         },
 
         "ormConfig":{
             "type": "postgres",
-            "host": "192.168.0.117",
+            "host": "localhost",
             "port": 5432,
             "username": "postgres",
-            "password": "admin",
+            "password": "postgres",
             "database": "boilerplate",
             "synchronize": true,
             "logging": true,

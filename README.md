@@ -11,6 +11,7 @@ This is boilerplate project for NestJs/Postgres project
 5. Environment based configuration
 6. Email Service Implementation and Email Verification
 7. Custom logger service
+8. TypeORM/ POstgreSQL Implementation
 
 Entity Relations
 
